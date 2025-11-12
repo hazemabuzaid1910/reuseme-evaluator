@@ -13,7 +13,33 @@ interface Resume {
   resumePath: string;
   feedback: Feedback;
 }
+  interface Question {
+  question: string;
+  answer?: string;
+  type: 'technical' | 'behavioral' | string;
+}
 
+interface NestedQuestions {
+  questions: Question[];
+}
+
+interface InterviewData {
+  id: string;
+  companyName: string;
+  jobTitle: string;
+  questions: NestedQuestions;
+  date:string;
+}
+interface AIResponseCorrectAnswers {
+  questions: {
+    question: string;
+    type: "technical" | "theoretical" | "behavioral";
+    userAnswer?: string;
+    aiAnswer: string;
+    score: number;
+    notes: string;
+  }[]
+}
 interface Feedback {
   overallScore: number;
   ATS: {
@@ -54,5 +80,5 @@ interface Feedback {
       tip: string;
       explanation: string;
     }[];
-  };
-}
+  }
+  }

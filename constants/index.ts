@@ -1,6 +1,4 @@
-
-  
-  export const resumes: Resume[] = [
+    export const resumes: Resume[] = [
   {
     id: "1",
     companyName: "Google",
@@ -181,7 +179,30 @@
     },
   },
 ];
-
+export const AIResponseFormatQuestions = `
+      interface Questions {
+      questions: {
+      question: string;
+      type: "technical" | "behavioral";
+      answer: string;
+      Date: string;
+      }[];
+      
+    }`;
+  export const AIResponseCorrectAnswers = `
+interface AIResponseCorrectAnswers {
+  questions: {
+    question: string;
+    type: "technical" | "theoretical" | "behavioral";
+    userAnswer?: string;
+    aiAnswer: string;
+    score: number;
+    notes: string;
+  }[];
+}
+`;
+      
+    
 export const AIResponseFormat = `
       interface Feedback {
       overallScore: number; //max 100
@@ -224,6 +245,7 @@ export const AIResponseFormat = `
           explanation: string; //explain in detail here
         }[]; //give 3-4 tips
       };
+      
     }`;
 
 export const prepareInstructions = ({
@@ -247,3 +269,61 @@ export const prepareInstructions = ({
   Provide the feedback using the following format: ${AIResponseFormat}
   Return the analysis as a JSON object, without any other text and without the backticks.
   Do not include any other text or comments.`;
+export const CorrectAnswers = ({
+  test,
+  questions,
+}: {
+  test: InterviewData;
+  questions: NestedQuestions;
+}) => `
+You are an expert teacher and evaluator with deep knowledge in computer science and engineering.
+Your task is to review and grade the following list of questions and their answers.
+this task: ${JSON.stringify(test, null, 2)}
+and the answers provided by the user: ${JSON.stringify(questions, null, 2)}For each question:
+1. If the user provided an answer:
+   - Check if it is correct, partially correct, or incorrect.
+   - Give a **score** from 0 to 100.
+   - Add **notes** explaining why the answer is correct or incorrect, and how it can be improved.
+2. If the user did not provide an answer:
+   - You must **generate the correct answer** (aiAnswer).
+   - Give a score of 0 and explain in the notes that the user did not answer.
+
+Be detailed and objective, using a strict but fair evaluation.
+
+Respond **only** in valid JSON following this interface:
+${AIResponseCorrectAnswers}
+
+Do not include any other text or markdown formatting.
+Do not include backticks or explanations outside the JSON.
+`;
+
+
+export const prepareQuestions = ({
+  jobTitle,
+  jobDescription,
+  isAnswered,
+}: {
+  jobTitle: string;
+  jobDescription: string;
+  isAnswered: boolean;
+}) => `
+You are an expert in HR and job interviews.
+Generate a list of interview questions for a candidate applying for this job.
+Make the questions relevant to the job title and description provided.
+Include both technical and behavioral questions if applicable.
+Be thorough and cover important skills, responsibilities, and scenarios.
+
+Job Title: ${jobTitle}
+Job Description: ${jobDescription}
+
+${
+  isAnswered
+    ? "For each question, also provide a clear and well-written sample answer."
+    : "Only provide the questions without answers."
+}
+
+Return the result as a JSON object following this exact structure:
+${AIResponseFormatQuestions}
+
+Do not include any text, explanation, or markdown formatting — only valid JSON.
+`;

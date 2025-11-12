@@ -107,7 +107,6 @@ console.log("AI feedback done ✅");
       // Prevent the browser from performing a full page navigation
       event.preventDefault();
 
-      // The event.currentTarget is the form element in React's FormEvent
       const form = event.currentTarget as HTMLFormElement;
       const formData = new FormData(form);
 

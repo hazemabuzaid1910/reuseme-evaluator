@@ -54,6 +54,7 @@ useEffect(()=>{
             <img src="/icons/back.svg" alt="logo" className='w-2.5 h-2.5' />
             <span className='text-gray-800 text-sm font-semibold'>Back to Homepage</span>
             </Link>
+          
         </nav>
         <div className='flex relative flex-row w-full max-lg:flex-col-reverse'>
      <section className="feedback-section bg-[url('/images/bg-small.svg')] bg-cover h-screen flex items-center justify-center sticky top-0 overflow-hidden gradient-border max-sm:m-0">

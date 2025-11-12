@@ -11,7 +11,7 @@ function auth() {
     const {isLoading,auth}=usePuterStore();
     const location=useLocation();
     const navigate=useNavigate();
-    const next=location.search.split('next=')[1]
+    const next=location.search.split('next=')[1] 
     useEffect(()=>{
         if(auth.isAuthenticated){
             navigate(next)

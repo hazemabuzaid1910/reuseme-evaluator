@@ -73,8 +73,8 @@ interface PuterStore {
       options?: PuterChatOptions
     ) => Promise<AIResponse | undefined>;
     feedback: (
-      path: string,
-      message: string
+      message: string,
+       path: string
     ) => Promise<AIResponse | undefined>;
     img2txt: (
       image: string | File | Blob,
